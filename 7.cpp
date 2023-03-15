@@ -1,5 +1,16 @@
 #include<bits/stdc++.h>
 using namespace std;
+void display(vector<vector<int>> arr)
+{
+    for(int i=0; i<arr.size(); i++)
+    {
+        for(int j=0; j<arr[i].size(); j++)
+        {
+            cout<<arr[i][j]<<" ";
+        }
+        cout<<"\n";
+    }
+}
 bool isvalid(vector<vector<int>> &arr,int x,int y,int p)
 {
     for(int i=0; i<arr[x].size(); i++)
@@ -34,6 +45,7 @@ void soltion(vector<vector<int>> &arr,int i,int j)
 {
     if(i==arr.size())
     {
+        display(arr);
         return;
     }
     int ni=0;
@@ -78,12 +90,12 @@ int main()
         }
     }
     soltion(arr,0,0);
-    for(int i=0; i<n; i++)
-    {
-        for(int j=0; j<m; j++)
-        {
-            cout<<arr[i][j]<<" ";
-        }
-        cout<<"\n";
-    }
+    // for(int i=0; i<n; i++)
+    // {
+    //     for(int j=0; j<m; j++)
+    //     {
+    //         cout<<arr[i][j]<<" ";
+    //     }
+    //     cout<<"\n";
+    // }
 }
