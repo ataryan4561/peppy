@@ -20,19 +20,58 @@ void display()
         cout<<endl;
     }
 }
-void dfs(int i,vector<bool> &vis,string ans,int dis)
+void dfs(int i,int j,vector<bool> &vis,string ans,int dis)
 {
-    if(i==graph.size()-1)
+    if(i==j)
     {
         cout<<ans<<" "<<dis<<endl;
+        return;
+    }
+    else if(graph[i].size()==0)
+    {
         return;
     }
     vis[i]=true;
     for(pair<int,int> e : graph[i])
     {
         if(!vis[e.first])
-            dfs(e.first,vis,ans+"->"+to_string(e.first),dis+e.second);
+            dfs(e.first,j,vis,ans+"->"+to_string(e.first),dis+e.second);
     }
+}
+int pathroot(int i,vector<bool> &vis,string ans,int dis)
+{
+    if(graph[i].size()==0)
+    {
+        return 1;
+    }
+    int ans1=0;
+    vis[i]=true;
+    for(pair<int,int> e : graph[i])
+    {
+        if(!vis[e.first])
+            ans1+=pathroot(e.first,vis,ans+"->"+to_string(e.first),dis+e.second);
+    }
+    return ans1;
+}
+int path(int i,int j,vector<bool> &vis,string ans,int dis)
+{
+    if(i==j)
+    {
+        // cout<<ans<<" "<<dis<<endl;
+        return 1;
+    }
+    else if(graph[i].size()==0)
+    {
+        return 0;
+    }
+    int ans1=0;
+    vis[i]=true;
+    for(pair<int,int> e : graph[i])
+    {
+        if(!vis[e.first])
+            ans1+=path(e.first,j,vis,ans+"->"+to_string(e.first),dis+e.second);
+    }
+    return ans1;
 }
 vector<pair<int,int>> bfs(int i,vector<bool> &vis)
 {
@@ -78,7 +117,11 @@ int main()
     display();
     vector<bool> vis(n,false);
     vector<bool> vis1(n,false);
-    dfs(0,vis,"0",0);
+    vector<bool> vis2(n,false);
+    vector<bool> vis3(n,false);
+    dfs(0,3,vis,"0",0);
+    cout<<path(0,3,vis2,"0",0)<<endl;
+    cout<<pathroot(0,vis,"0",0)<<endl;
     vector<pair<int,int>> as=bfs(0,vis1);
     int d=0;
     for(pair<int,int> e : as)
